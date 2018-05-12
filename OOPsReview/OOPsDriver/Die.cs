@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace OOPsDriver
 
     // REBUILD AT THE END OF EDITING CODE
+
+    // Console is an object, Writeline is a method
 {
     // default access privelige of a class is private, you MUST add public to your classes to be able to access them
 
@@ -52,7 +54,8 @@ namespace OOPsDriver
                 return Sides;
             }
 
-            set     // what does set do lol???
+            private set     // what does set do lol???
+                // this needs to be private so that the user can't set the value directly, they need to use SetSides
             {
                 // "value" is a reserved key word used by the compiler to obtain the incoming data value to the property
                 // make sure you save the incoming data value to your private
@@ -64,7 +67,7 @@ namespace OOPsDriver
         //  -does not have a private data member
         //  -the system craetes and internal data storage member for the property
 
-        public int FaceValue { get; set; } // FIGURE OUT WHAT THIS DOES TOO
+        public int FaceValue { get; private set; } // FIGURE OUT WHAT THIS DOES TOO
 
         // within a property you can validate that the incoming data value is "of the expected type (not sure if type is the right word here)"
 
@@ -132,6 +135,15 @@ namespace OOPsDriver
         // this constructor would be called for something like: new classname();
         public Die()
         {
+            // even though the sides would be set to a valid numeric value within this class, a more logical value to use as a default would be 6 (aka a standard die)
+
+            Sides = 6;
+            Color = "White";
+
+            // we need to set a random default value for the die
+            Roll(); // roll sets FaceValue for us
+
+            // what if we need to change the number of sides on the die?
 
         }
 
@@ -151,8 +163,50 @@ namespace OOPsDriver
             Sides = sides; // the set {} of the property Sides is used
             Color = color;
         }
+        
+        /////////////
+        // behaviors
+        /////////////
+
+        // behaviors are pretty much just methods
+
+        public void Roll()
+        {
+            // this method will be used to generate a new face value for the instance
+
+            // an instance of the math class Random() has been coded at the top of this class
+
+            // the method in the class random that will be called is .Next(inclusive lowest number, exclusive highest number)
+            // it is important to note that one is inclusive and one is exclusive
+
+            FaceValue = _rnd.Next(1, Sides + 1);
+        }
+
+        public void SetSides (int sides)
+        {
+            // let us assume that only 6 to 20 sided dice are allowed
+            if (sides > 5 && sides < 21)        // use && as the "and" operator
+            {
+                Sides = sides;
+
+                // after changing Sides property we must roll the die again to ensure that we have a valid roll (ie the roll was 17 but we changed sides to 10, it's invalid now, roll again)
+
+                Roll();
+            }
+
+            else
+            {
+                // we are not "writing" an error msg here, we are "throwing" an error
+
+                throw new Exception("Invalid number of sides for the die");
+            }
+        }
+
+
 
     } // end of class die
 } // end of namespace
 
 // REBUILD AT THE END OF EDITING CODE
+
+    // sides is a value, Sides is a property, _Sides is a data member
