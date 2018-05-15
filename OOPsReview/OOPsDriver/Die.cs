@@ -51,7 +51,7 @@ namespace OOPsDriver
             {
                 // this will return the private data member
                 // MAKE SURE YOU RETURN _SIDES AND NOT SIDES, YOU WANT TO RETURN THE PRIVATE NOT THE PUBLIC OR ELSE YOU'LL GET AN ENDLESS LOOP ERROR
-                return Sides;
+                return _Sides;
             }
 
             private set     // what does set do lol???

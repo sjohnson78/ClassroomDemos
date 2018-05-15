@@ -56,7 +56,7 @@ namespace OOPsDriver
                             // logic can de done using a method
                             // the method will need to have the local variables Player1Dice and Player2Dice passed to it
                             // objects are passed as references
-                            Console.WriteLine("You selected A");
+                            SetDiceSides(Player1Dice, Player2Dice);
                             break;
                         }
                     case "B":
@@ -64,17 +64,76 @@ namespace OOPsDriver
                             //logic can be done actually inside the case
                             //one does not have to always call a method
 
-                            Console.WriteLine("You selected B");
+                            // roll the dice for each player, using the roll method
+                            // the . operator is used with your instance to access a property or a behaviour
+                            
+                            Player1Dice.Roll(); // this uses the method Roll on the Object Player1Dice **** CONFIRM IF THIS IS TRUE ****
+                            Player2Dice.Roll();
+
+                            // record the result of the roll for this turn
+                            // we will need to create a new instance of the Turn class
+
+                            Turn aturn = new Turn(); // this creates a new instance of the class Turn, named aturn **** CONFIRM IF THIS IS TRUE ****
+
+                            //      set                     get
+                            aturn.Player1DiceValue = Player1Dice.FaceValue; // this is a property, you don't have the (), this makes sense because properties don't take in parameters
+                            aturn.Player2DiceValue = Player2Dice.FaceValue;
+
+                            // determine dice battle results
+                            // it does not matter in this logic weather we use the values from aturn or the values from the Die variables, see below for proof
+
+                            if (aturn.Player1DiceValue > Player2Dice.FaceValue) // this is just done as an example, we should pick one and use the same for both
+                            {
+                                aturn.TurnWinner = "Player1";
+                            }
+
+                            else if (aturn.Player2DiceValue > aturn.Player1DiceValue) // here we use aturn values for  both, this is a better idea
+                            {
+                                aturn.TurnWinner = "Player2";
+                            }
+
+                            else
+                            {
+                                aturn.TurnWinner = "Draw";
+                            }
+
+
+
+                            Console.WriteLine("Results: Player 1 rolled {0}, Player 2 rolled {1}, winner is {2}", aturn.Player1DiceValue, aturn.Player2DiceValue, aturn.TurnWinner);
+
+                            // add the aturn instance to the List<T>
+                            gameTurns.Add(aturn);
+
+
                             break;
                         }
                     case "C":
                         {
-                            Console.WriteLine("You selected C");
+                            // display the current standing in the game
+
+                            ///////////////
+                            //foreach loop
+                            ///////////////
+                            // this loop will start processing your collection from the first instance to the last instance, moving automatically to the next instance
+
+                            // c# has a datatype called var, var datatype is set at execution time but it still strongly typed based on its first execution
+
+                            foreach (var thisTurn in gameTurns) // **** WHAT THE FUCK DOES "IN" DO ****
+                            {
+                                Console.WriteLine("Results: Player 1 rolled {0}, Player 2 rolled {1}, winner is {2}", thisTurn.Player1DiceValue, thisTurn.Player2DiceValue, thisTurn.TurnWinner);
+                            }
+
+                            Console.Write("\n");
                             break;
                         }
                     case "X":
                         {
                             Console.WriteLine("Thank you for playing. Come again.");
+                            
+                            // HOMEWORK IS TO DISPLAY HERE, HOW MANY WINS PLAYER 1 HAD, HOW MANY WINS PLAYER 2 HAD, AND HOW MANY DRAWS
+                            // TRY USING A FOREACH LOOP THAT WALKS THROUGH THE COLLECTION AND DOES COUNTS FOR ME
+                            // USE AN IF STATEMENT WITHIN THE FOREACH LOOP
+
                             break;
                         }
                     default:
