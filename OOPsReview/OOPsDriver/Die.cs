@@ -162,6 +162,7 @@ namespace OOPsDriver
 
             Sides = sides; // the set {} of the property Sides is used
             Color = color;
+            Roll();
         }
         
         /////////////
