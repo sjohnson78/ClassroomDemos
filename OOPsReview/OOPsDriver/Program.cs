@@ -125,24 +125,45 @@ namespace OOPsDriver
 
                             Console.Write("\n");
                             break;
-                        }
+                        } // closes case c
                     case "X":
                         {
                             Console.WriteLine("Thank you for playing. Come again.");
-                            
+
                             // HOMEWORK IS TO DISPLAY HERE, HOW MANY WINS PLAYER 1 HAD, HOW MANY WINS PLAYER 2 HAD, AND HOW MANY DRAWS
                             // TRY USING A FOREACH LOOP THAT WALKS THROUGH THE COLLECTION AND DOES COUNTS FOR ME
                             // USE AN IF STATEMENT WITHIN THE FOREACH LOOP
 
+                            // below is to declare a new array, named counts
+                            int[] counts = new int[] { 0, 0, 0 }; // you could have just put 3 inbetween the second set of "[]", that would create an array that stores three values
+                                                                  // using { 0, 0, 0 } just initializes the three values to zero, which is the default starting value anyways
+                            foreach (var aturn in gameTurns)
+                            {
+                                if (aturn.TurnWinner.Equals("Player1"))
+                                {
+                                    counts[0]++; // this increments the value in the array at position zero (increments meaning adds one to the current value)
+                                }
+                                else if (aturn.TurnWinner.Equals("Player2"))
+                                {
+                                    counts[1]++;
+                                }
+                                else
+                                {
+                                    counts[2]++;
+                                }
+                            }
+
+                            Console.WriteLine("Player 1 won {0} times, player 2 won {1} times, and {2} draws", counts[0], counts[1], counts[2]);
+                            Console.WriteLine("Thanks for playing, now frig off!");
                             break;
-                        }
+                        } // closes case x
                     default:
                         {
                             Console.WriteLine("Invalid menu choice. Try again.");
                             break;
                         }
 
-                } // end of switch
+                } // closes switch
             } while (menuChoice.ToUpper() != "X");
 
             Console.ReadKey();
