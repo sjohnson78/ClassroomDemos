@@ -1,0 +1,17 @@
+﻿@*this is the content page*@
+
+@{
+    Page.Title = "Home";
+    Layout = "~/_LayoutPage.cshtml";
+}
+
+@section banner{
+    <h1>Hello</h1>
+}
+
+<p>This text is not in a section on the content page, therefore this text is put in the RenderBody area of the layout page.</p>
+
+<p>Any html tags or any text not in a section defaults to the RenderBody</p>
+
+@section footer{
+    <p>&copy; CPSC1517, NAIT Today's date is @DateTime.Today.ToLongDateString()</p>}

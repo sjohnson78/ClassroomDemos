@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @* title is the name of the tab in the browser *@
+    <title>@Page.Title</title> 
+</head>
+<body>
+    <div>
+        @RenderSection("banner", required:true)
+        @* @ sign escapes html mode and allows you to use c# code*@
+        @RenderBody()
+        <br />
+        <hr style="line-height:10px" />
+        @RenderSection("footer", required:false)
+    </div>
+</body>
+</html>
+
+@* the underscore at the start of the name makes it impossible to load this page directly *@
