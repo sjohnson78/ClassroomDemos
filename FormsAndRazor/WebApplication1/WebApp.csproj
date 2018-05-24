@@ -107,6 +107,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Controls\TextBoxes.cshtml" />
     <Content Include="Controls\RadioButtonList.cshtml" />
+    <Content Include="Controls\CheckBoxes.cshtml" />
+    <Content Include="Controls\DropDownList.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

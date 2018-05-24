@@ -1,8 +1,73 @@
 ﻿@{
     Page.Title = "Textboxes";
     Layout = "~/_LayoutPage.cshtml";
+
+    // the syntax is typically c#
+    // access to an input control will be by the name parameter on the control
+    // since we are using c# things are case-sensitive
+    // to reference the control, use the object request and the property reference .Form["xxxx"] where xxxx is vale of the name parameter
+    // data that is coming from the form is of datatype string
+    // place your incoming data into a variable for access by this page
+
+    var controlvariablename = Request.Form["controlname"];
+
+    // we need to create another variable that we use to determine which button was pressed
+
+    var whichbutton = Request.Form["formbutton"]; // this works because both buttons are named formbutton, the difference is the value, which we check for in an if statement later on
 }
 
 @section banner{
     <h1>Text Boxes</h1>
+}
+
+@*best practice is to add a div right at the start*@
+<div>
+
+    @*we can use the post flag to determine logic:
+        the first time the page is loaded the value of the flag is false
+        if you remain on this page the value of the flag will be true.*@
+
+    @if (IsPost)
+    {
+        if (string.IsNullOrEmpty(controlvariablename))
+        {
+            <p>You did not enter any data, bitch!</p>
+        }
+        else
+        {
+            if (whichbutton.Equals("Data"))
+            {
+                @* to access a local variable within your html text, you will place the @ symbol in front of the variable name  *@
+                <p>You entered &gt; @controlvariablename &lt;</p>
+            }
+
+            else
+            {
+                <p>The length is @controlvariablename.Length</p>
+            }
+
+        }
+
     }
+
+
+
+
+
+
+
+    @*java type will use id tag to reference, razor will use name tag to reference controls (the id tag is not necessary unless you are using java), easiest to keep them the same*@
+
+    @*use the post method with sensitive information, 99.9% of the time we will be using post method, get is your other option*@
+
+    @*by default, action will process this page*@
+
+    <form id="theForm" action="" method="post">
+        <label for="forcontrolname">Field Label:</label>&nbsp;&nbsp; @*&nbsp; adds white space*@
+        <input type="text" id="controlname" name="controlname" value="@controlvariablename" placeholder="enter your name" /><br />
+        <button type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="Data">What did you type, fucker?</button>
+        <button type="submit" id="formbutton" name="formbutton" class="btn" value="length">How many characters in that shit?</button>
+        @*there are submit and reset buttons, submit sends form to web browser, reset clears the form without sending data*@
+
+    </form>
+</div>
