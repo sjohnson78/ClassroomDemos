@@ -10,7 +10,7 @@
     @if (IsPost)
     {
         // the variable will contain a list of all the checkboxes that were selected by the user
-        var choices = Request.Form["CheckBoxGoup"];
+        var choices = Request.Form["CheckBoxGroup"];
 
         // validate that at least one checkbox was turned on
         if (choices.IsEmpty())
