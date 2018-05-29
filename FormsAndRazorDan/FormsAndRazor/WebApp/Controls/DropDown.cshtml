@@ -1,0 +1,63 @@
+﻿@{
+    Page.Title = "DropDown";
+    Layout = "~/_LayoutPage.cshtml";
+
+    var choice = Request.Form["CodingSample"];
+}
+@section banner{
+    <h1>DropDown (Select)</h1> }
+
+<div>
+    @if (IsPost)
+    {
+        switch (choice.ToUpper()) /* ToUpper here just makes sure you'll always have an upper case switch selection */
+        {
+            case "TEXTBOXES":
+                {
+                    // use the response object's method redirect ("page name") to send the user to a specific page
+                    // use relative addressing in referecning your page
+                    Response.Redirect("TextBoxes.cshtml");
+                    break;
+                }
+            case "CHECKBOXES":
+                {
+                    Response.Redirect("CheckBoxes.cshtml");
+                    break;
+                }
+            case "RADIOBUTTONS":
+                {
+                    Response.Redirect("RadioButtons.cshtml");
+                    break;
+                }
+            default:
+                {
+                    // is a message if the prompt line is the current option choice
+                    <p><span style="color:firebrick">Make a selection from both coding choices.</span></p>
+                    break;
+                }
+        }
+    }
+
+
+    <form id="theForm" action="" method="post">
+        <div class="col-md-offset-1">
+            <label id="forCodingSample">Select the sample to view</label><br />
+            @*      - the select tag is used to create the dropdown control.
+                - each item in the control is specified using the option tag
+                - to set an item to b the selected item, used the optin tag "parameter selected"
+                - if no item has been selected then the first option is the default item that is shown
+                - often you will see that the first choice is a prompt from the control*@
+            <select name="CodingSample">
+                <option value="">select ....</option>
+                <option value="TextBoxes">TextBoxes</option>
+                <option value="RadioButtons">RadioButtons</option>
+                <option value="CheckBoxes">CheckBoxes</option>
+            </select>
+            &nbsp;&nbsp;
+            <button type="submit" name="formButton" value="submit" class="btn btn-primary">
+                Go To...
+            </button>
+        </div>
+
+    </form>
+</div>
