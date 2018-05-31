@@ -1,0 +1,94 @@
+﻿@{
+    Page.Title = "DB Single Query";
+    Layout = "~/_LayoutPage.cshtml";
+
+    //declare variables up here... variables that are coded in this opening code block are known throughout the ENTIRE page
+    var searcharg = Request.Form["SearchArg"]; // this variable stores the data the user typed in the search field
+    var formbutton = Request.Form["formButton"]; // this variable stores which button was pressed by user
+    string regionid = "";
+    string regiondescription = "";
+    // the variables above are used in the "value" parameters in the forms below
+
+    // now we process the sql query
+    // open a connection to the desired database
+    // this is done via the connection string config file
+    var db = Database.Open("NWDB");
+
+    // create your sql command
+    // since the search arguement value changes depending on what the user entered, the command search value needs to be changable.
+    // to add this felxibility, we must use a placeholder (@n) in the hardcoded command string, where n starts a 0, 1, 2, etc...
+    var sqlcommand = "SELECT RegionID, RegionDescription FROM Region WHERE RegionID = @0";
+
+    // now we execute the sql command against the connected database
+    // QuerySingle() is used when there are 0 or 1 record expected from database
+    // Query() is used when there is 0, 1, or more expected record(s) from the database
+    // QueryValue() is used when a single value is expected from the database
+    // RegionID is a primary key
+    var results = db.QuerySingle(sqlcommand, searcharg); // you need two parameters here, one to determine the string used in the query
+                                                         // second is the value the WTF IS HAPPENIGN HERE
+
+}
+
+@section banner{
+    <h1>Database: Single Query</h1> }
+
+@* THE STUFF ABOVE THIS COMMENT MUST BE DONE FIRST EVERY TIME *@
+
+<div>
+    @if (IsPost)
+    {
+        if (formbutton.Equals("reset"))
+        {
+            // this code executes if the user pushes the reset button, and sets the field strings to be blank
+            searcharg = "";
+            regionid = "";
+            regiondescription = "";
+        }
+        else
+        {
+            // this code is to test for results with no data, because we are using QuerySingle() which expects a single value from the database
+            if (results == null)
+            {
+                <p>no region with the id of @searcharg</p>
+            }
+            else
+            {
+                // code here runs if the record was found, now we need to move 
+                // the values from the database results to the local variable fields
+
+                // there are two ways to do this
+
+                // ONE, using an index in your results variable, need to convert to string:
+                regionid = results[0].ToString();
+
+                // TWO, using the property in your results object to reference
+
+                regiondescription = results.RegionDescription;
+            }
+        }
+    }
+
+
+
+    <form id="theForm" action="" method="post">
+        <div class="col-md-3">
+            <label id="forSearchArg">Enter a Region ID: </label>
+            <input type="text" id="SearchArg" name="SearchArg" value="@searcharg" placeholder="enter region id" />
+            <br />
+            <br />
+            <button type="submit" name="formButton" id="formButton" value="submit" class="btn btn-primary">
+                Submit
+            </button>
+            <button type="submit" name="formButton" id="formButton" value="reset" class="btn">
+                Clear
+            </button>
+        </div>
+        <div class="col-md-4">
+            <label id="forRegionId">Region ID: </label>
+            <input type="text" id="RegionID" name="RegionID" value="@regionid" />
+            <br />
+            <label id="forRegionDescription">Region Name: </label>
+            <input type="text" id="RegionDescription" name="RegionDescription" value="@regiondescription" />
+        </div>
+    </form>
+</div>
