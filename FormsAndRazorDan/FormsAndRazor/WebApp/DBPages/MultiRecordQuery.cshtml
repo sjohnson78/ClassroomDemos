@@ -1,0 +1,37 @@
+﻿@{
+    Page.Title = "Filter Lookup";
+    Layout = "~/_LayoutPage.cshtml";
+
+    //obtain a list of the categories from the database into a variable (collection)
+    var db = Database.Open("NWDB"); //forgot which database to open?? go look in WebConnectionString.config
+    var querycommand = "SELECT CategoryID, CategoryName FROM Categories ORDER BY CategoryName";
+    var infolist = db.Query(querycommand); // note that there are no parameters being passed in this time
+
+}
+
+@section banner{
+    <h1>Database: Filter Multi-Record Query</h1>
+    }
+
+<div class="col-md-offset-4">
+    <form id="theForm" action="" method="post">
+        <label id="forCategoryList">Select Category: </label>
+        <select id="CategoryList" name="CategoryList">
+            <option value="0">select...</option>
+            @* use a foreach again here, we don't know how many values we need to loop through*@
+            @foreach (var item in infolist)
+            {
+                // 1. loop through the collection (infolist), 
+                // 2. create a line in the dropdownlist for each item in the collection
+                // 3. referencing of the value in the item is done using either:
+                //      a. an index such as item[3], which represents column 4
+                //      b. by property name of the collection item.xxxxxxx
+                // both methods  can be used in the process AT THE SAME DAMN TIME
+                <option value="@item[0]">@item.CategoryName</option>
+            }
+        </select>
+        <button type="submit" id="formButton" name="formButton" value="submit" class="btn btn=primary">Products?</button>
+    </form>
+
+    
+</div>
