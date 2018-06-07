@@ -1,0 +1,155 @@
+﻿@{
+    Page.Title = "Insert";
+    Layout = "~/_LayoutPage.cshtml";
+    var thebutton = Request.Form["formButton"];
+
+    var productname = ""; // we need to declare this variable here so that we can use it in all other code blocks, putting it in the if portion of the IsPost does NOT work
+    var supplierid = "";
+    var categoryid = "";
+    var quantityperunit = "";
+    var unitprice = "";
+    var unitsinstock = "";
+    var unitsonorder = "";
+    var reorderlevel = "";
+    var discontinued = "";
+
+    // declare this up here so it's global
+    var db = Database.Open("NWDB");
+
+    // we need two more variables to use as queries to get a list of suppliers and list of categories
+    var supplierquery = "SELECT SupplierID, CompanyName FROM Suppliers Order by 2";
+    var categoryquery = "SELECT CategoryID, CategoryName FROM Categories Order by 2";
+
+    var supplierlist = db.Query(supplierquery);
+    var categorylist = db.Query(categoryquery);
+
+}
+@section banner{
+    <h1>Database: Inserting Data</h1> 
+}
+
+    <div>
+        <div class="alert alert-info">
+            <blockquote>
+                This form will demonstrate the create (insert) portion of CRUD. @* crud stands for create read update delete *@
+                It will demonstrate using bootstrap text alignment for setting up right align text, default left align controls, and centered aligned submit buttons.
+                The input controls and their label text controls are in a 2 column format.
+                The submit buttons are centered on another row.
+                The introduction of the alert class.
+                Tooltips are used.
+                Review of try/catch.
+            </blockquote>
+        </div>
+
+        @if (IsPost)
+    {
+        if (thebutton.Equals("clear"))
+        {
+            <p class="col-sm-12 text-center">Cleared by user.</p>
+    }
+    else
+    {
+        // retrieve data from the forms
+        productname = Request.Form["ProductName"]; // this is fucking stupid, why don't we have productname and ProductName in the same case styling??
+        supplierid = Request.Form["SupplierID"];
+        categoryid = Request.Form["CategoryID"];
+        quantityperunit = Request.Form["QuantityPerUnit"];
+        unitprice = Request.Form["UnitPrice"];
+        unitsinstock = Request.Form["UnitsInStock"];
+        unitsonorder = Request.Form["UnitsOnOrder"];
+        reorderlevel = Request.Form["ReorderLevel"];
+
+        // if the checkbox is not checked, the value returned is null
+        // if the checkbox is checked the value returned is the string "on"
+
+        discontinued = Request.Form["Discontinued"];
+
+        // add this data to the database
+        // do some error handling aka try catch some shit
+        try
+        {
+            // connect to database
+            // we created this at the very top of the page (AS A GLOBAL VERIABLE), so we can comment it out here
+            // var db = Database.Open("NWDB");
+
+            // set up command
+            var insertcommand = "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued) "
+                                // make sure you have a space before end quotes on the line above
+                                + "Values(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
+
+            // execute command, ASK DON WTF IS GOING ON HERE
+            db.Execute(insertcommand, productname,
+                string.IsNullOrEmpty(supplierid) ? null : supplierid,
+                string.IsNullOrEmpty(categoryid) ? null : categoryid,
+                string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
+                string.IsNullOrEmpty(unitprice) ? null : unitprice,
+                string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
+                string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
+                string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
+                0
+                );
+            <p class="col-sm-12 text-center">
+                <span style="color:green"><strong>Product was added</strong></span>
+            </p>
+    }
+    catch (Exception ex)
+    {
+        <p class="col-sm-12 text-center">
+            <span style="color:firebrick"><strong>@ex.Message</strong></span> @* where does this error msg come from?? *@
+        </p>
+    //throw;
+}
+}
+}
+
+
+        <form id="theForm" action="" method="post">
+            @* without the method post, the page won't know that we have pressed the submit button. default action is *@
+            @* ASK DON WHAT THE DEFAULT ACTION IS HERE *@
+            <div class="row">
+
+                <div class="col-sm-5 text-right">
+                    <label id="forProductName">Name: </label><br />
+                    <label id="forSupplierID">Supplier: </label><br />
+                    <label id="forCategoryID">Category: </label><br />
+                    <label id="forQuantityPerUnit">Size: </label><br />
+                    <label id="forUnitPrice">Price: </label><br />
+                    <label id="forUnitsInStock">QOH: </label><br /> @* QOH stands for quantity on hand *@
+                    <label id="forUnitsOnOrder">QOO: </label><br /> @* QOO stands for quantity on order *@
+                    <label id="forReorderLevel">ROL: </label><br /> @* ROL stands for re-order level, which is the amount of stock remaining before you need to order more *@
+                    <label id="forDiscontinued">DISC: </label><br />
+                </div>
+
+                <div class="col-sm-7">
+                    @* remember that this will take up 7 out of 12 total "width units" *@
+                    <input name="productName" type="text" value="@productname" title="Enter Product Name" placeholder="product name" /> <br /> @* default value = ??? *@
+                    <input name="SupplierID" type="text" value="@supplierid" title="Enter Supplier ID" placeholder="SupplierID" /> <br />
+                    <input name="CategoryID" type="text" value="@categoryid" title="CategoryID" placeholder="CategoryID" /> <br />
+                    <input name="QuantityPerUnit" type="text" value="@quantityperunit" title="QuantityPerUnit" placeholder="QuantityPerUnit" /> <br />
+                    <input name="UnitPrice" type="text" value="@unitprice" title="UnitPrice" placeholder="UnitPrice" /> <br />
+                    <input name="UnitsInStock" type="text" value="@unitsinstock" title="UnitsInStock" placeholder="UnitsInStock" /> <br />
+                    <input name="UnitsOnOrder" type="text" value="@unitsonorder" title="UnitsOnOrder" placeholder="UnitsOnOrder" /> <br />
+                    <input name="ReorderLevel" type="text" value="@reorderlevel" title="ReorderLevel" placeholder="ReorderLevel" /> <br />
+                    <input name="Discontinued" type="checkbox" value="@(string.IsNullOrEmpty(discontinued)?"":"Checked")" /> (discontinued if checked) <br />
+                    @*  for an explanation of the line above, see https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator  *@
+                    @* in the line above, it's a short version of an if statement *@
+                </div>
+
+                <div>
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" name="formButton" value="submit" class=" btn btn-primary" style="width:90px">
+                            Add
+                        </button>
+                        &nbsp; &nbsp;
+                        <button type="submit" name="formButton" value="clear" class="btn" style="width:90px">
+                            Clear
+                        </button>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </form>
+    </div>

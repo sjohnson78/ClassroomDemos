@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/myStyleSheet1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- RenderPage() will physical bring in the referenced page and place
+            the code in this location-->
+        @RenderPage("_Menu.cshtml")
+        <br /><br />
+        
+        <div class="jumbotron">
+            @RenderSection("banner", required: true)
+        </div>
+        @RenderBody()
+        <br />
+        <hr style="line-height:5px" />
+        @RenderSection("footer", required: false)
+    </div>
+</body>
+</html>
