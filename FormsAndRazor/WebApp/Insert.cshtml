@@ -78,7 +78,11 @@
                                 + "Values(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
 
             // execute command, ASK DON WTF IS GOING ON HERE
+            // because the select tag will always have a value, you can no longer use IsNullOrEmpty (this is a textbox test)
+            // instead, you will need to test for a particular value: equals.("xxxx")
             db.Execute(insertcommand, productname,
+                supplierid.Equals("0") ? null : supplierid,
+                categoryid.Equals("0") ? null : categoryid,
                 string.IsNullOrEmpty(supplierid) ? null : supplierid,
                 string.IsNullOrEmpty(categoryid) ? null : categoryid,
                 string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
@@ -109,21 +113,50 @@
             <div class="row">
 
                 <div class="col-sm-5 text-right">
-                    <label id="forProductName">Name: </label><br />
-                    <label id="forSupplierID">Supplier: </label><br />
-                    <label id="forCategoryID">Category: </label><br />
-                    <label id="forQuantityPerUnit">Size: </label><br />
-                    <label id="forUnitPrice">Price: </label><br />
-                    <label id="forUnitsInStock">QOH: </label><br /> @* QOH stands for quantity on hand *@
-                    <label id="forUnitsOnOrder">QOO: </label><br /> @* QOO stands for quantity on order *@
-                    <label id="forReorderLevel">ROL: </label><br /> @* ROL stands for re-order level, which is the amount of stock remaining before you need to order more *@
-                    <label id="forDiscontinued">DISC: </label><br />
+                    <label id="ProductName">Name: </label><br />
+                    <label id="SupplierID">Supplier: </label><br />
+                    <label id="CategoryID">Category: </label><br />
+                    <label id="QuantityPerUnit">Size: </label><br />
+                    <label id="UnitPrice">Price: </label><br />
+                    <label id="UnitsInStock">QOH: </label><br /> @* QOH stands for quantity on hand *@
+                    <label id="UnitsOnOrder">QOO: </label><br /> @* QOO stands for quantity on order *@
+                    <label id="ReorderLevel">ROL: </label><br /> @* ROL stands for re-order level, which is the amount of stock remaining before you need to order more *@
+                    <label id="Discontinued">DISC: </label><br />
                 </div>
 
                 <div class="col-sm-7">
                     @* remember that this will take up 7 out of 12 total "width units" *@
-                    <input name="productName" type="text" value="@productname" title="Enter Product Name" placeholder="product name" /> <br /> @* default value = ??? *@
-                    <input name="SupplierID" type="text" value="@supplierid" title="Enter Supplier ID" placeholder="SupplierID" /> <br />
+                    <input name="productName" type="text" value="@productname" title="Enter Product Name" placeholder="product name" /> <br />
+                    @* we can use two ways to access, property or array position, first we use index *@
+                    <select id="SupplierID" name="SupplierID">
+                        <option value="0">select...</option>
+                            @* add notes here that explain what's happening in this foreach loop *@
+                        @foreach (var item in supplierlist)
+                        {
+                            //
+                            if (item.SupplierID.ToString() == supplierid)
+                            {
+                                <option value="@item[0]" selected>@item.CompanyName</option>
+                            }
+                            else
+                            {
+                                <option value="@item[0]">@item.CompanyName</option>
+                            }                            
+                        }
+                    </select><br/>
+                    @* now we use property THIS METHOD IS RECOMMENDED *@
+                    <select id="CategoryID" name="CategoryID">
+                        <option value="0">select...</option>
+                        @foreach (var item in categorylist)
+                        {
+
+
+                            // change this one to be same as supplier id above (so it saves your pick)
+                            <option value="@item.CategoryID">@item[1]</option>
+                        }
+                    </select><br/>
+                    
+                    @*<input name="SupplierID" type="text" value="@supplierid" title="Enter Supplier ID" placeholder="SupplierID" />*@ <br />
                     <input name="CategoryID" type="text" value="@categoryid" title="CategoryID" placeholder="CategoryID" /> <br />
                     <input name="QuantityPerUnit" type="text" value="@quantityperunit" title="QuantityPerUnit" placeholder="QuantityPerUnit" /> <br />
                     <input name="UnitPrice" type="text" value="@unitprice" title="UnitPrice" placeholder="UnitPrice" /> <br />
