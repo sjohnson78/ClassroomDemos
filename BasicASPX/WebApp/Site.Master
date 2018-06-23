@@ -56,7 +56,19 @@
                         <li><a runat="server" href="~/SamplePages/Hello">Hello</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>--%>
-                    <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapNav"></asp:Menu>
+
+                    <%--static display menu levels = one means that the top line of the menu will always be shown--%>
+                    <asp:Menu ID="Menu1" 
+                        runat="server"  
+                        DataSourceID="SiteMapNav"
+                        Orientation="Horizontal" 
+                        StaticDisplayLevels="1" 
+                        StaticMenuStyle-CssClass="nav navbar-nav" 
+                        StaticSelectedStyle-CssClass="active" 
+                        DynamicMenuStyle-CssClass="dropdown-menu" 
+                        IncludeStyleBlock="false" 
+                        EnableTheming="false" 
+                        EnableViewState="false"></asp:Menu>
                     <asp:SiteMapDataSource ID="SiteMapNav" runat="server" ShowStartingNode="false" />
                 </div>
             </div>

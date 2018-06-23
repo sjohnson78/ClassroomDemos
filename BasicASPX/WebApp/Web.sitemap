@@ -7,8 +7,9 @@
     
 
     <siteMapNode url="" title="Samples" description=""> <!-- siteMapNodes seperate opening and closing tags create drop down menus -->
-      
+
       <siteMapNode url="~/SamplePages/Hello.aspx" title="Hello"  description="" /><!-- siteMapNodes within another siteMapNode are dropdown menu items -->
+      <siteMapNode url="~/SamplePages/BasicControls.aspx" title="Basic Controls"  description="" />
     </siteMapNode>
     
     <siteMapNode url="~/About.aspx" title="About"  description="" />
