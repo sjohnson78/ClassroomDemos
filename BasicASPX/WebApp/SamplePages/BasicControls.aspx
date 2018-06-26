@@ -28,7 +28,7 @@
                 <td align="right">TextBox &nbsp;</td>
                 <td>
                     <asp:TextBox ID="TextBoxNumberChoice" runat="server"></asp:TextBox>
-                    <asp:Button ID="SubmitButtonChoice" runat="server" Text="Submit Choice" /> &nbsp; (Enter a number from 1-4)
+                    <asp:Button ID="SubmitButtonChoice" runat="server" Text="Submit Choice" OnClick="SubmitButtonChoice_Click" /> &nbsp; (Enter a number from 1-4)
                 </td>
             </tr>
             <tr>
@@ -48,6 +48,7 @@
             </tr>
             <tr>
                 <td align="right">
+                    <%-- literal is similar to a label, but typically we should use labels, they are more flexible --%>
                     <asp:Literal ID="Literal1" runat="server" Text="Choice: CheckBox "></asp:Literal></td>
                 <td>
                     <asp:CheckBox ID="CheckBoxChoice" runat="server" /></td>
