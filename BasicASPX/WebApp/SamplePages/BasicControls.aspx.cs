@@ -10,99 +10,148 @@ namespace WebApp.SamplePages
     public partial class BasicControls : System.Web.UI.Page
     {
         public static List<DDLClass> DataCollection;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            // this method will execute on EACH and EVERY post back to this page
+            //this method will execute on EACH and EVERY post back
+            //to this page.
+            //this method will execute on the first display of this page
+            //To determine if the page is new or postback use IsPostBack property
 
-            // this method will execute on the first display of this page
+            //this method is often used as a general method to reset
+            //fields or controls at the start of the page processing
+            //The label MessageLabel is used to display messages to the user
+            //Old messages should be remove from this control on each pass
 
-            // to determine if the page is new or postback, use the IsPostBack property
-
-            // this method is often used as a general method to reset fields or controls at the start of page processing
-
-            // the label MessageLabel is used to display messages to the user. Old messages should be removed from this control on each pass
-
-            // how do we reference a control on the .aspx form? notice that each form control has an ID, we can use this.
-
-            // each control is an object, therefore we will be altering property values
-
+            //How does one reference a control on the .aspx form
+            //To reference a form control, use the control ID name
+            //EACH control is an object. THEREFORE alter a PROPERTY value.
             MessageLabel.Text = "";
 
-            if (!Page.IsPostBack) // "!" means NOT
+            //Determine if this is the first display of the page
+            //  and if so, load data into the dropdownlist
+            if (!Page.IsPostBack)
             {
-                // here we are creating an instance of List<T> for the "fake database" data
+                //Create an instance of List<T> for my "fake database" data
                 DataCollection = new List<DDLClass>();
 
-                // add data to the collection that we just created, one entry at a time
+                //add data to the collection, one entry at a time
                 DataCollection.Add(new DDLClass(1, "COMP1008"));
-                DataCollection.Add(new DDLClass(2, "DMIT1508"));
-                DataCollection.Add(new DDLClass(3, "CPSC1517"));
+                DataCollection.Add(new DDLClass(3, "DMIT1508"));
+                DataCollection.Add(new DDLClass(2, "CPSC1517"));
                 DataCollection.Add(new DDLClass(4, "DMIT2018"));
 
-                // one benefit of using a list vs an array is that we can easily sort them, we do this below using the .Sort() method
-
-                // (x, y) represents ANY two entries in the data collection at ANY point in time
-
-                // the lamda symbol "=>" basically means "do the following"
-
-                // .CompareTo() is a mehtod that will compare two items and return the result
-
-                // this result is then interpreted by the Sort() method to determind if the order needs to be changed
-
+                //usually lists are sorted
+                //The List<T> has a .Sort() behaviour (method)
+                //(x,y) represents any two entries in the data collection at any point in time
+                // the lamda symbol => basically means "do the following"
+                //.CompareTo() is a method that will compare to items and return the result
+                //   of comparing two items. The result is interpreted by the Sort() to
+                //   to determine if the order needs to be changed.
                 // x vs y is ascending
                 // y vs x is descending
-
                 DataCollection.Sort((x, y) => x.DisplayField.CompareTo(y.DisplayField));
 
-                // place the collection into the dropdownlist
-                // a) assign the collection to the control (ID = CollectionList
-
+                //place the collection into the dropdownlist
+                //a) assign the collection to the control (ID=CollectionList)
                 CollectionList.DataSource = DataCollection;
 
-                // b) assign the value and display portions of the dropdownlist to specify properties of the data class
+                //b)assign the value and display portions of the dropdownlist
+                //     to specify properties of the data class
                 CollectionList.DataTextField = nameof(DDLClass.DisplayField);
                 CollectionList.DataValueField = nameof(DDLClass.ValueField);
 
-                // c) bind the data to the collection (aka physical attachment)
+                //c)Bind the data to the collection (physical attachment)
                 CollectionList.DataBind();
 
-                // d) you may wish to add a prompt line at the beginning of the list of data within the dropdown list
-
+                //d)You may wish to add a prompt line at the beginning of the
+                //     list of data within the dropdownlist
                 CollectionList.Items.Insert(0, "select...");
             }
-            
-        } // closes PageLoad
+        }
 
-        // SubmitButtonChoice is the ID of the button on the BasicControls.aspx page
         protected void SubmitButtonChoice_Click(object sender, EventArgs e)
         {
-            MessageLabel.Text = "You pressed the Submit Choice button";
+            //grab the contents of various controls and manipulate the content
+            // of other controls
+            //controls have certain properties that can be accessed to obtaining
+            // and assigning values
 
-            // grab the contents of various controls and manipulate the content of other controls
+            //Textbox  Property: Text
+            string submitchoice = TextBoxNumberChoice.Text;
 
-            // controls have certain properties that can be accessed to obtain and assign values
-            // change the .Text property:
-            string submitChoice = TextBoxNumberChoice.Text;
-
-            if (string.IsNullOrEmpty(submitChoice))
+            if (string.IsNullOrEmpty(submitchoice))
             {
-                MessageLabel.Text = "Your did not enter a number between 1 and 4";
+                MessageLabel.Text = "You did not enter a number between 1 and 4.";
             }
             else
             {
-                // RadioButtonList Properties: SelectedIndex, SelectedValue, SelectedItem
-                // SelectedIndex returns the physical line index number
-                // SelectedValue returns the data value associated with the physical line
-                // SelectedItem returns the data display associated with the physical line
+                //RadioButtonList Property: SelectedIndex, SelectedValue, SelectedItem
+                //SelectedIndex returns the physical line index number
+                //SelectedValue returns the data value associated with the physical line **
+                //SelectedItem returns the data display associated with the physical line
+                RadioButtonListChoice.SelectedValue = submitchoice;
+
+                //CheckBox: Property: Checked (boolean)
+                if (submitchoice.Equals("2") || submitchoice.Equals("4"))
+                {
+                    CheckBoxChoice.Checked = true;
+                }
+                else
+                {
+                    CheckBoxChoice.Checked = false;
+                }
+
+                //DropDownList : Property :SelectedValue (preferred)
+                //                        :SelectedIndex
+                CollectionList.SelectedValue = submitchoice;
+
+                //Label (Literal) Property : Text
+                //demostrate using SelectedIndex, SelectedValue and SelectedItem
+                // to obtain data off the dropdownlist
+                //The data will be concatentated into a single string
+                DisplayDataReadOnly.Text = CollectionList.SelectedItem.Text
+                      + " at index " + CollectionList.SelectedIndex.ToString()
+                      + " having a value of " + CollectionList.SelectedValue;
+
             }
-
-        } // closes submitbuttonchoice
-
-        protected void LinkButtonChoice_Click(object sender, EventArgs e)
-        {
-            MessageLabel.Text = "You pressed the Link button";
         }
-        
+
+        protected void LinkButtonSubmitChoice_Click(object sender, EventArgs e)
+        {
+            
+            // THIS WAS ADDED ON JULY 4TH, PRACTICING THIS WAS THE HOMEWORK FROM LAST WED
+
+            if (CollectionList.SelectedIndex == 0)
+            {
+                MessageLabel.Text = "Please select a course";
+            }
+            else
+            {
+                // DDL property: SelectedValue, SelectedIndex, SelectedItem (DDL PROPERTIES? WHAT THAT MEANS?)
+                
+                string ddlselection = CollectionList.SelectedValue;
+                TextBoxNumberChoice.Text = ddlselection;
+                RadioButtonListChoice.SelectedValue = ddlselection;
+
+                //CheckBox: Property: Checked (boolean)
+
+                if (ddlselection.Equals("2") || ddlselection.Equals("4"))
+                {
+                    CheckBoxChoice.Checked = true;
+                }
+                else
+                {
+                    CheckBoxChoice.Checked = false;
+                }
+
+                DisplayDataReadOnly.Text = CollectionList.SelectedItem.Text
+                          + " at index " + CollectionList.SelectedIndex.ToString()
+                          + " having a value of " + CollectionList.SelectedValue;
+            }
+                        
+
+        }
+
+       
     }
 }

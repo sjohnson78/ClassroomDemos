@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <!-- a sitemapnode is an item on your menu -->
+  <siteMapNode url="" title=""  description="root node - this will be ignored"> <!--for whatever reason, we always ignore this first one the "root node"-->
+    <siteMapNode url="~/Default.aspx" title="Home"  description="" /> <!--url is where the link goes to, title is what shows up for you to click on-->
+    
+    
+
+    <siteMapNode url="" title="Samples" description=""> <!-- siteMapNodes seperate opening and closing tags create drop down menus -->
+
+      <siteMapNode url="~/SamplePages/Hello.aspx" title="Hello"  description="" /><!-- siteMapNodes within another siteMapNode are dropdown menu items -->
+      <siteMapNode url="~/SamplePages/BasicControls.aspx" title="Basic Controls"  description="" />
+    </siteMapNode>
+    
+    <siteMapNode url="~/About.aspx" title="About"  description="" />
+    <siteMapNode url="~/Contact.aspx" title="Contact"  description="" />  <!-- for an individual menu item, the opening and closing tags are together-->
+    
+    <siteMapNode url="" title=""  description="" />
+    <siteMapNode url="" title=""  description="" />
+    <siteMapNode url="" title=""  description="" />
+    <siteMapNode url="" title=""  description="" />
+    <siteMapNode url="" title=""  description="" />
+  </siteMapNode>
+</siteMap>

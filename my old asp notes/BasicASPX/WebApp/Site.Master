@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %></title>
+    <title><%: Page.Title %></title>  <%-- instead of an @ sign like in razor, the <% escapes HTML mode to code mode --%>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -14,7 +14,7 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="Content/Customize.css" rel="stylesheet" />
+
 </head>
 <body>
     <form runat="server">
@@ -47,26 +47,29 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">BasicAPSX</a>
+                    <a class="navbar-brand" runat="server" href="~/">Basic ASPX</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                   <%-- <ul class="nav navbar-nav">
+                    <%--<ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/SamplePages/Hello">Hello</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/SamplePages/Hello">Hello</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>--%>
-                    <asp:Menu ID="Menu1" runat="server"
-                         DataSourceID="SiteMapNav" 
-                         Orientation="Horizontal"
-                         StaticDisplayLevels="1"
-                         StaticMenuStyle-CssClass="nav navbar-nav"
-                         StaticSelectedStyle-CssClass="active"
-                         DynamicMenuStyle-CssClass="dropdown-menu"
-                         IncludeStyleBlock="false" EnableTheming="false"
-                         EnableViewState="false"></asp:Menu>
-                    <asp:SiteMapDataSource ID="SiteMapNav" runat="server" 
-                         ShowStartingNode="false"/>
+
+                    <%--static display menu levels = one means that the top line of the menu will always be shown--%>
+                    <asp:Menu ID="Menu1" 
+                        runat="server"  
+                        DataSourceID="SiteMapNav"
+                        Orientation="Horizontal" 
+                        StaticDisplayLevels="1" 
+                        StaticMenuStyle-CssClass="nav navbar-nav" 
+                        StaticSelectedStyle-CssClass="active" 
+                        DynamicMenuStyle-CssClass="dropdown-menu" 
+                        IncludeStyleBlock="false" 
+                        EnableTheming="false" 
+                        EnableViewState="false"></asp:Menu>
+                    <asp:SiteMapDataSource ID="SiteMapNav" runat="server" ShowStartingNode="false" />
                 </div>
             </div>
         </div>

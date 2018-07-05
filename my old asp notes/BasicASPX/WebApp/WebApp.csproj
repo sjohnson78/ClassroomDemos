@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{686FCDD0-196E-4208-BF3F-1557676B8E22}</ProjectGuid>
+    <ProjectGuid>{0F373DF2-7A09-4416-993A-3EE29700E0E5}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -131,7 +131,6 @@
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Customize.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -145,7 +144,6 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="SamplePages\BasicControls.aspx" />
-    <Content Include="SamplePages\ContestEntry.aspx" />
     <Content Include="SamplePages\Hello.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -180,7 +178,9 @@
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
-    <Content Include="Web.sitemap" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -217,13 +217,6 @@
     </Compile>
     <Compile Include="SamplePages\BasicControls.aspx.designer.cs">
       <DependentUpon>BasicControls.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SamplePages\ContestEntry.aspx.cs">
-      <DependentUpon>ContestEntry.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SamplePages\ContestEntry.aspx.designer.cs">
-      <DependentUpon>ContestEntry.aspx</DependentUpon>
     </Compile>
     <Compile Include="SamplePages\Hello.aspx.cs">
       <DependentUpon>Hello.aspx</DependentUpon>
@@ -280,9 +273,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3564</DevelopmentServerPort>
+          <DevelopmentServerPort>2239</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3564/</IISUrl>
+          <IISUrl>http://localhost:2239/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
