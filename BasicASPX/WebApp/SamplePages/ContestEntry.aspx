@@ -1,4 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ContestEntry.aspx.cs" Inherits="WebApp.SamplePages.ContestEntry" %>
+
+
+<%--<link href="../Content/Customize.css" rel="stylesheet" /> <%-- drag this from the content folder, dont need it here --%>--%>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
       <div class="page-header">
         <h1>Contest Entry</h1>
@@ -99,8 +103,92 @@
         ValidationExpression="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
         ></asp:RegularExpressionValidator>
     <%-- get this email validation expression from emailregex.com --%>
-    
-    
+
+    <asp:CompareValidator ID="CompareCheckAnswer" 
+        runat="server" 
+        ErrorMessage="Skill testing answer incorrect" 
+        ControlToValidate="CheckAnswer" 
+        SetFocusOnError="true" 
+        ForeColor="Firebrick" 
+        Display="None" 
+        Operator="Equal" ValueToCompare="15"
+        Type="Integer"></asp:CompareValidator>
+
+
+    <%-- ------------------ --%>
+    <%-- VALIDATOR EXAMPLES --%>
+    <%-- ------------------ --%>
+
+    <%-- 
+        -range validators need: 
+            MinimumValue: minimum allowed value (inclusive)
+            MaximumValue: maximum allowed value (inclusive)
+            type: data type of the value
+        -by default type is set to string
+        -note that our min value is 0.0 and not zero, because we have type = double    --%>
+
+    <%-- range validator is for example purposes, so we comment it out --%>
+
+    <%--<asp:RangeValidator ID="RangeSomeField" 
+        runat="server" ErrorMessage="Some field value is out of range (0-100)" 
+        ControlToValidate="SomeField" 
+        SetFocusOnError="true" 
+        ForeColor="Firebrick" 
+        Display="None" 
+        MinimumValue="0" 
+        MaximumValue="100.0" 
+        Type="Double" ></asp:RangeValidator>--%>
+
+
+    <%-- 
+        -treat a compare validator like an if statement
+        -version one: data type check, use to ensure that you have the correct data type regardless of value
+
+        -version two: constant value check, use to ensure that the value entered is the expected value
+
+        -version three: used to ensure that a value in one field matches the value in another field
+                        use controltocompare instead of valuetocompare here
+
+        -compare validators need:
+            operator: the condition used in the "if statement" portion of the comparison validator
+                        for version one we just use datatype check, and then use type to set the datatype that we are looking for
+
+        - remember that the default type is string, we likely need to change this
+
+    --%>
+
+    <%--<asp:CompareValidator ID="CompareVersion1" 
+        runat="server" 
+        ErrorMessage="Version 1 is the wrong data type" 
+        ControlToValidate="Version1" 
+        SetFocusOnError="true" 
+        ForeColor="Firebrick" 
+        Operator="DataTypeCheck" 
+        Display="None"
+        Type="Date"></asp:CompareValidator>
+
+    <asp:CompareValidator ID="CompareValidator2" 
+        runat="server" 
+        ErrorMessage="Version 2 value is incorrect" 
+        ControlToValidate="Version2" 
+        SetFocusOnError="true" 
+        ForeColor="Firebrick" 
+        Display="None" 
+        Operator="GreaterThan" 
+        ValueToCompare="0.00"
+        Type="Currency"></asp:CompareValidator>
+
+    <asp:CompareValidator ID="CompareValidator3" 
+        runat="server" 
+        ErrorMessage="Version 3 value is not confirmed" 
+        ControlToValidate="Version2" 
+        SetFocusOnError="true" 
+        ForeColor="Firebrick" 
+        Display="None" 
+        Operator="Equal" ControlToCompare="AnotherField"
+        Type="String"></asp:CompareValidator>--%>
+
+
 
     <%-- validation summary from toolbox is used to display the errors/messages --%>
     <%--HeaderText is a msg for the user--%>
@@ -157,8 +245,7 @@
         <asp:Label ID="Label8" runat="server" Text="Email"
                 AssociatedControlID="EmailAddress"></asp:Label>
         <asp:TextBox ID="EmailAddress" runat="server" 
-            ToolTip="Enter your email address"
-                TextMode="Email"></asp:TextBox> 
+            ToolTip="Enter your email address"></asp:TextBox> 
 
         <asp:Label ID="Label9" runat="server" Text="Agree to Terms"
             AssociatedControlID="Terms"></asp:Label>
@@ -184,7 +271,13 @@
                
         <asp:Label ID="Message" runat="server" Text="bob" ></asp:Label>
 
-        
+
+        <%-- gridview is from toolbox -> data  --%>
+
+        <asp:GridView ID="ContestEntries" runat="server"></asp:GridView>
+
     </div>  
     
+    
+
 </asp:Content>

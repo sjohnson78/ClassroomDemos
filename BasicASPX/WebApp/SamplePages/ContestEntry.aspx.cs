@@ -9,6 +9,12 @@ namespace WebApp.SamplePages
 {
     public partial class ContestEntry : System.Web.UI.Page
     {
+        // since we are not currently using a database, we will collect the entries into a list<T> collection
+        // <T> will be the class entry
+        // the List<T> will be static so that it will hang around during our testing
+
+        public static List<Entry> contestentries = new List<Entry>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Message.Text = "";
@@ -32,18 +38,50 @@ namespace WebApp.SamplePages
         
         protected void Submit_Click(object sender, EventArgs e)
         {
-            string firstName = FirstName.Text;
-            string lastName = LastName.Text;
-            string streetAddress1 = StreetAddress1.Text;
-            string streetAddress2 = StreetAddress2.Text;
-            string city = City.Text;
-            string email = EmailAddress.Text;
-            string pc = PostalCode.Text;
-            string province = Province.SelectedValue; // use .SelectedValue for drop down lists
-            bool terms = Terms.Checked; // for a bool use .Checked
-            string answer = CheckAnswer.Text;
+            // on the server side, we can rerun the validation controls:
 
-            Message.Text = firstName + " " + lastName;
+            if (Page.IsValid) // checks for validation = true
+            {
+                
+
+
+                string firstName = FirstName.Text;
+                string lastName = LastName.Text;
+                string streetAddress1 = StreetAddress1.Text;
+                string streetAddress2 = StreetAddress2.Text;
+                string city = City.Text;
+                string email = EmailAddress.Text;
+                string pc = PostalCode.Text;
+                string province = Province.SelectedValue; // use .SelectedValue for drop down lists
+                bool terms = Terms.Checked; // for a bool use .Checked
+                string answer = CheckAnswer.Text;
+
+
+                // there may be validation taht cannot be done using the basic validation controls
+                // or there may be a need for logic-based control validation
+
+                if(terms) // how is this working? 
+                {
+                    // create an instance of the entry using the greedy constructor
+                    Entry theEntry = new Entry(firstName, lastName, streetAddress1, streetAddress2, city, province, pc, email);
+
+                    // add this instance to the collection of entries
+                    contestentries.Add(theEntry);
+
+                    // attach the collection of entries to the GridView control
+                    ContestEntries.DataSource = contestentries; // contestentries is the name of the List<T> we created above
+                    ContestEntries.DataBind(); // what does databind do?
+                }
+                else
+                {
+                    Message.Text = "You did not agree to the terms of the contest. Entry denied.";
+                }
+
+                
+            }
+
+
+            
 
         }
 
