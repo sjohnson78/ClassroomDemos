@@ -7,13 +7,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - My ASP.NET Application</title>
-
+    
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/Customize.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -50,11 +51,22 @@
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <%--<ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
+                    </ul>--%>
+                    <asp:Menu ID="Menu1" runat="server"
+                         DataSourceID="SiteMapNav" 
+                         Orientation="Horizontal"
+                         StaticDisplayLevels="1"
+                         StaticMenuStyle-CssClass="nav navbar-nav"
+                         StaticSelectedStyle-CssClass="active"
+                         DynamicMenuStyle-CssClass="dropdown-menu"
+                         IncludeStyleBlock="false" EnableTheming="false"
+                         EnableViewState="false"></asp:Menu>
+                    <asp:SiteMapDataSource ID="SiteMapNav" runat="server" 
+                         ShowStartingNode="false"/>
                 </div>
             </div>
         </div>

@@ -38,5 +38,7 @@ namespace NorthwindSystem.DAL
         // Products is the property of the context class  
         // DbSet is an EntityFramework data type (note it's a plural this time)
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }
