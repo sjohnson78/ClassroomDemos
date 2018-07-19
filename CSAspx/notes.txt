@@ -1,0 +1,3 @@
+view, server explorer, to check SQL tables
+
+after i left we did validation on product class, and a couple new buttons.
