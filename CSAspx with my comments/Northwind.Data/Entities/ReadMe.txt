@@ -1,0 +1,1 @@
+﻿This folder will hold the classes that will represent an entity on the database.
