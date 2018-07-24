@@ -36,6 +36,8 @@ namespace Northwind.Data.Entities
         //       order of sql attributes)
 
         //validation can be done on your individual property of your entity
+
+        // validation done here, we left out web page validation on purpose
         [Key]
         public int ProductID { get; set; }
         [Required(ErrorMessage ="Product name is required")]
