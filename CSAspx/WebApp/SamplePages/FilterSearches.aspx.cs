@@ -121,25 +121,19 @@ namespace WebApp.SamplePages
 
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
         {
-            // this method switches the user between views on he form
-            // the value associated with the MenuItem is treated as an index
+            //this method switches the user between views on the form
+            //the value associated with the MenuItem is treated as an index
             int index = Int32.Parse(e.Item.Value);
-
-            // ActiveViewIndex determines which view is displayed
+            //ActiveViewIndex determines which view is displayed
             MultiView1.ActiveViewIndex = index;
         }
 
         protected void CategoryList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // when the dropdown list is used in view 1, this method executes
-
-
             if (CategoryList.SelectedIndex == 0)
             {
                 errormsgs.Add("Select a category to view the category products.");
                 LoadMessageDisplay(errormsgs, "alert alert-info");
-
-                // assigning a null data source and binding it is a good way to clear your grid view
                 ProductGridViewV1.DataSource = null;
                 ProductGridViewV1.DataBind();
             }
@@ -156,7 +150,6 @@ namespace WebApp.SamplePages
                     }
                     else
                     {
-                        // should probably figure out how this sorting works
                         info.Sort((x, y) => x.ProductName.CompareTo(y.ProductName));
                        
                         //GridView
@@ -262,11 +255,8 @@ namespace WebApp.SamplePages
         protected void ProductGridViewV3_SelectedIndexChanged(object sender, EventArgs e)
         {
             //you have pressed the Select button on the gridview
-            // create a variable to represent a grid view row (agv row = a grid view row)
             GridViewRow agvrow = ProductGridViewV3.Rows[ProductGridViewV3.SelectedIndex];
-
             //access a field on the default (non customized) gridview row
-            // point to a row, then cells[index], (cells are just columns)
             string productid = agvrow.Cells[1].Text;
             string productname = agvrow.Cells[2].Text;
             errormsgs.Add("You selected the product " + productname + " (" + productid + ")");

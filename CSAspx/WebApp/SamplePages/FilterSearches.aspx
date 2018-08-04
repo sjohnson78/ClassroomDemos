@@ -24,11 +24,6 @@
         </ItemTemplate>
     </asp:DataList>
     <br />
-    <%-- below is the code for the multi-view
-        - menu items need a value, using an index position. 
-        - this index position is used in FilterSearches.aspx.cs, in the method Menu1_MenuItemClick
-
-        --%>
     <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal"
         StaticMenuItemStyle-CssClass="tab"
         Font-Size="Large" StaticSelectedStyle-CssClass="selectedTab"
@@ -44,19 +39,6 @@
             <asp:MenuItem Text="Exercise" Value="4"></asp:MenuItem>
         </Items>
     </asp:Menu>
-    <%-- tabContents is part of the stylesheet that Don provided us
-        - MULTIVIEW is just a control from the toolbox
-        - ActiveViewIndex sets up which view should be displayed upon page load (aka default view)
-        - we drag a VIEW control into the multi view (this example has 5 views within the multiview)
-        - note that each view has a FIELDSET
-        - note that this is ONE PAGE, very important to remember because controls must have unique id's
-            - Don's way to fix this is to add a suffix to repeated controls, V1 in view one, V2 in view 2, etc.
-
-        - to get a dropdown list to work without a button, we need autopostback = true and onselectedindexchanged = "AppropriateMethod"
-            - to implement this method, simply double click the dropdown list in design mode, similar to how we did it with a button
-
-        
-        --%>
     <div class="tabContents">
         <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">

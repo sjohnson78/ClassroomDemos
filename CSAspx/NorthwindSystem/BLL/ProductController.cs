@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 #region Additional Namespaces
 using Northwind.Data.Entities;
 using NorthwindSystem.DAL;
-using System.Data.SqlClient; // need this to be able to use "new SqlParameter("CategoryID", categoryid));"
+using System.Data.SqlClient;
+using System.ComponentModel;
 #endregion
 
 namespace NorthwindSystem.BLL
 {
+
+    [DataObject]
+
     //this is the public interface class that will handle
     //  web page service requests for data to the Product sql table
     //Methods in this class can interact with the internal DAL Context class
@@ -138,31 +142,22 @@ namespace NorthwindSystem.BLL
             }
         }
 
-        public List<Product> Products_GetByCategories(int categoryid) // we pass in the categoryid to be used in the SqlParameter later
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Product> Products_GetByCategories(int categoryid)
         {
             using (var context = new NorthwindContext())
             {
                 IEnumerable<Product> results =
-                    context.Database.SqlQuery<Product>("Products_GetByCategories @CategoryID", 
-                    // passing in ONE parameter
-                    // note that you NEED the @ sign here but not below
-                    // this is similar to db.Query, @0, @1, etc would need values assigned
-
-                    // we are using the "Greedy constructor" of the sql parameter below, passing in categoryid
-                                    new SqlParameter("CategoryID", categoryid)); // this line is why we need the new namespace "using System.Data.SqlClient"
-
-                    // between the quotes, we match the @CategoryID, after the comma we are using our variable (see above, we are passing in an int called categoryid)
+                    context.Database.SqlQuery<Product>("Products_GetByCategories @CategoryID",
+                                    new SqlParameter("CategoryID", categoryid));
                 return results.ToList();
             }
         }
 
-        // best practice here is to name the method the same thing as the SQL procedure, this is why both are named "Products_GetBySupplierPartialProductName"
-        public List<Product> Products_GetBySupplierPartialProductName(int supplierid, string partialproductname) 
+        public List<Product> Products_GetBySupplierPartialProductName(int supplierid, string partialproductname)
         {
             using (var context = new NorthwindContext())
             {
-                // this is similar to above but with two parameters
-                
                 //sometimes there may be a sql error that does not like the new SqlParameter()
                 //       coded directly in the SqlQuery call
                 //if this happens to you then code your parameters as shown below then
@@ -190,6 +185,7 @@ namespace NorthwindSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Product> Products_GetByCategoryAndName(int category, string partialname)
         {
             using (var context = new NorthwindContext())

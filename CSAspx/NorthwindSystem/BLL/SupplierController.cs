@@ -10,12 +10,21 @@ using Northwind.Data.Entities;
 using Northwind.Data.Views;
 using NorthwindSystem.DAL;
 using System.Data.SqlClient;
+using System.ComponentModel;
+
 #endregion
+
+
 
 namespace NorthwindSystem.BLL
 {
+    [DataObject]
+
     public class SupplierController
     {
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+
         public List<Supplier> Suppliers_List()
         {
             using (var context = new NorthwindContext())
@@ -23,6 +32,9 @@ namespace NorthwindSystem.BLL
                 return context.Suppliers.ToList();
             }
         }
+
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
 
         public Supplier Suppliers_GetSupplier(int supplierid)
         {
@@ -32,6 +44,8 @@ namespace NorthwindSystem.BLL
             }
         }
 
+        //[DataObjectMethod(DataObjectMethodType.Select, false)]
+
         public List<SupplierCategories> Suppliers_GetCategories(int suppilerid)
         {
             using (var context = new NorthwindContext())
@@ -39,6 +53,20 @@ namespace NorthwindSystem.BLL
                 IEnumerable<SupplierCategories> results =
                     context.Database.SqlQuery<SupplierCategories>("Suppliers_GetCategories @SupplierID",
                                     new SqlParameter("SupplierID", suppilerid));
+                return results.ToList();
+            }
+        }
+
+
+        //[DataObjectMethod(DataObjectMethodType.Select, false)]
+
+        public List<Supplier> Suppliers_GetByPartialCompanyName(string partialname)
+        {
+            using (var context = new NorthwindContext())
+            {
+                IEnumerable<Supplier> results =
+                    context.Database.SqlQuery<Supplier>("Suppliers_GetByPartialCompanyName @PartialName",
+                                    new SqlParameter("PartialName", partialname));
                 return results.ToList();
             }
         }
